@@ -15,17 +15,15 @@ export function signinUser({ email, password }) {
     // Submit to server
     axios.post(`${API_URL}/signin`, { email, password })
       .then(response => {
-        // Good:
-        // - Update state to authenticated
+        // Update state to authenticated
         dispatch({ type: AUTH_USER })
-        // - Save JWT token
+        // Save JWT token
         localStorage.setItem('token', response.data.token)
-        // - Redirect to /feature
+        // Redirect to /feature
         browserHistory.push('/feature')
       })
       .catch(() => {
-        // Bad:
-        // - Show error
+        // Set error
         dispatch(authError('Wrong credentials'))
       })
 
@@ -42,11 +40,7 @@ export function signupUser({ email, password }) {
         localStorage.setItem('token', response.data.token)
         browserHistory.push('/feature')
       })
-      .catch(response => {
-        console.log(response)
-        dispatch(authError(response.data.message))
-      })
-
+      .catch(response => dispatch({ type: AUTH_ERROR, payload: response.data.error }))
   }
 }
 
