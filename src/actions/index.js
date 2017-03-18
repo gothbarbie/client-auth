@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { browserHistory } from 'react-router'
 import {
-  AUTH_USER
+  AUTH_USER,
+  AUTH_ERROR
 } from './types'
 
 const API_URL = 'http://localhost:3090'
@@ -23,12 +24,16 @@ export function signinUser({ email, password }) {
       .catch(() => {
         // Bad:
         // - Show error
-
+        dispatch(authError('Wrong credentials'))
       })
-
-
 
   }
 
+}
 
+export function authError(error) {
+  return {
+    type: AUTH_ERROR,
+    payload: error
+  }
 }
