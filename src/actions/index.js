@@ -3,7 +3,8 @@ import { browserHistory } from 'react-router'
 import {
   AUTH_USER,
   UNAUTH_USER,
-  AUTH_ERROR
+  AUTH_ERROR,
+  FETCH_MESSAGE
 } from './types'
 
 const API_URL = 'http://localhost:3090'
@@ -41,7 +42,11 @@ export function signupUser({ email, password }) {
         localStorage.setItem('token', response.data.token)
         browserHistory.push('/feature')
       })
-      .catch(response => dispatch(authError(response.data.error)))
+      .catch(response => {
+        console.log(response)
+        dispatch(authError(response.data.message))
+      })
+
   }
 }
 
@@ -56,4 +61,19 @@ export function signoutUser() {
   localStorage.removeItem('token')
 
   return { type: UNAUTH_USER }
+}
+
+export function fetchMessage() {
+  return function(dispatch) {
+    axios.get(API_URL, {
+      headers: { authorization: localStorage.getItem('token') }
+    })
+      .then(response => {
+        // console.log(response)
+        dispatch({
+          type: FETCH_MESSAGE,
+          payload: response.data.message
+        })
+      })
+  }
 }

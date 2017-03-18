@@ -5,7 +5,7 @@ class Welcome extends Component {
     return (
       <div className="container">
         <h2>Welcome!</h2>
-        <p>Would you like to Sign up or Sign in?</p>
+        <p>What would you like to do today?</p>
       </div>
     )
   }
