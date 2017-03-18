@@ -5,7 +5,6 @@ import * as actions from '../../actions'
 class Signin extends Component {
 
   handleFormSubmit({ email, password }) {
-    console.log(email, password)
     this.props.signinUser({ email, password })
   }
 
@@ -24,20 +23,24 @@ class Signin extends Component {
     const { handleSubmit, fields: { email, password }} = this.props
 
     return (
-      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <fieldset className="form-group">
-          <label>Email:</label>
-          <input {...email} className="form-control" />
-        </fieldset>
+      <div className="container">
+        <h2>Sign in</h2>
+        
+        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+          <fieldset className="form-group">
+            <label>Email:</label>
+            <input {...email} className="form-control" />
+          </fieldset>
 
-        <fieldset className="form-group">
-          <label>Password:</label>
-          <input {...password} className="form-control" type="password" /> 
-        </fieldset>
+          <fieldset className="form-group">
+            <label>Password:</label>
+            <input {...password} className="form-control" type="password" />
+          </fieldset>
 
-        {this.renderAlert()}
-        <button action="submit" className="btn btn-primary">Sign in</button>
-      </form>
+          {this.renderAlert()}
+          <button action="submit" className="btn btn-primary">Sign in</button>
+        </form>
+      </div>
     )
   }
 }
